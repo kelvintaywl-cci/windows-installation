@@ -13,7 +13,10 @@ jobs:
           background: true
           command: |
             while ($true) {
+                write-host "---------CPU"
                 wmic cpu get loadpercentage
+                write-host "---------Memory"
+                tasklist
                 write-host "---------"
                 start-sleep -Seconds 1
                 
