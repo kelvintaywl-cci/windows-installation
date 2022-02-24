@@ -8,8 +8,19 @@ jobs:
       name: win/default
       size: medium
     steps:
+      - run:
+          name: Profile CPU and memory usage (background)
+          background: true
+          command: |
+            while ($true) {
+                wmic cpu get loadpercentage
+                write-host "---------"
+                start-sleep -Seconds 1
+                
+            }    
       - checkout
       - run: 'Write-Host ''Hello, Windows'''
+      
 
 workflows:
   my-workflow:
