@@ -4,8 +4,9 @@ orbs:
 
 jobs:
   shallow-checkout:
-    machine:
-      image: windows-server-2019-vs2019:stable
+    executor:
+      name: win/default
+      size: medium
     steps:
       - run: |
           mkdir $HOME/.ssh -ea 0
@@ -43,5 +44,5 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - build
+      # - build
       - shallow-checkout
