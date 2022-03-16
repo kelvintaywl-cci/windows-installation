@@ -20,7 +20,7 @@ jobs:
             ' >> ~/.ssh/known_hosts
       - add_ssh_keys:
           fingerprints:
-            - "b3:1e:03:cf:29:8b:36:a6:87:09:d9:a0:62:c6:97:fd"
+            - "69:1d:29:cd:73:7d:79:bb:c7:38:b6:3b:4e:5e:44:36"
       - run:
           shell: bash.exe
           command: |
