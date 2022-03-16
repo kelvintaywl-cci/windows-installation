@@ -16,7 +16,7 @@ jobs:
           ' >> ~/.ssh/known_hosts
       - add_ssh_keys:
           fingerprints:
-            - "24:76:60:64:c5:69:ab:51:8a:45:45:3a:e7:a7:9c:e0"
+            - "b3:1e:03:cf:29:8b:36:a6:87:09:d9:a0:62:c6:97:fd"
       - run: |
           git clone --depth 1 $env:CIRCLE_REPOSITORY_URL .
   build:
