@@ -22,7 +22,7 @@ jobs:
           fingerprints:
             - "b3:1e:03:cf:29:8b:36:a6:87:09:d9:a0:62:c6:97:fd"
       - run: |
-          ssh -vT git@github.com || true 
+          ssh -T git@github.com || true 
       - run: |
           git clone --depth 1 $env:CIRCLE_REPOSITORY_URL .
   build:
