@@ -3,6 +3,19 @@ orbs:
   win: circleci/windows@2.4
 
 jobs:
+  docker-operations:
+    executor: win/server-2022
+    steps:
+      - checkout
+      - run:
+          name: check Docker
+          shell: bash.exe
+          command: |
+            docker version
+            docker image ls
+            docker pull mcr.microsoft.com/windows/nanoserver:ltsc2022
+            
+            docker image ls
   shallow-checkout:
     executor:
       name: win/default
@@ -54,5 +67,6 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - build
-      - shallow-checkout
+      - docker-operations
+#       - build
+#       - shallow-checkout
