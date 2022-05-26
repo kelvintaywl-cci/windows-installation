@@ -4,6 +4,16 @@ orbs:
   win: circleci/windows@4.1.1
 
 jobs:
+  docker-build:
+    executor: win/server-2022
+    steps:
+      - checkout
+      - run:
+          shell: bash.exe
+          command: |
+            docker build -t customwin -f ./.circleci/Dockerfile .
+            
+            docker image ls
   docker-operations:
     executor: win/server-2022
     steps:
@@ -68,6 +78,6 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - docker-operations
+      - docker-build
 #       - build
 #       - shallow-checkout
