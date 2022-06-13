@@ -21,9 +21,15 @@ jobs:
           node-version: '16.15.0'
       - run: nvm use 16.15.0
       - run: node --version
-      - node/install-packages:
-          # cache-version: v4-win32
-          override-ci-command: npm ci --unsafe-perm
+      - run: |
+          npm install cowsay
+          echo '============'
+          cat package.json
+          echo '============'
+          cat package-lock.json
+#       - node/install-packages:
+#           # cache-version: v4-win32
+#           override-ci-command: npm ci --unsafe-perm
   docker-build:
     executor: win/server-2022
     steps:
