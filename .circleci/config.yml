@@ -10,8 +10,21 @@ jobs:
       name: win/default
       shell: bash.exe
     steps:
-      - run: |
-          nvm --version
+      - run:
+          name: Check current version of NVM
+          command: |
+            nvm --version
+      - run:
+          name: Reinstall NVM (newer version)
+          command: |
+            # Existing issue with NVM-windows 1.1.7
+            # See https://github.com/npm/cli/issues/4234
+
+            choco uninstall nvm --confirm
+            choco install nvm
+            
+            # confirm NVM > 1.1.7 installed
+            nvm --version          
 #       - run:
 #           name: Preparing Additional Environment Variables
 #           command: |
