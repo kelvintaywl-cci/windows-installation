@@ -2,8 +2,28 @@ version: '2.1'
 
 orbs: 
   win: circleci/windows@4.1.1
+  node: circleci/node@5.0.2
 
 jobs:
+  node-install:
+    executor:
+      name: win/default
+      shell: bash.exe
+    steps:
+      - checkout
+#       - run:
+#           name: Preparing Additional Environment Variables
+#           command: |
+#             echo export STEAMWORKS_SDK_PATH=`pwd`/steamworks-sdk >> $BASH_ENV
+#             echo export PATH="/c/Program\\ Files/Git/mingw64/libexec/git-core:\$PATH" >> $BASH_ENV
+      - node/install:
+          # install-yarn: true
+          node-version: '16.15.0'
+      - run: nvm use 16.15.0
+      - run: node --version
+      - node/install-packages:
+          # cache-version: v4-win32
+          override-ci-command: npm ci --unsafe-perm
   docker-build:
     executor: win/server-2022
     steps:
@@ -78,6 +98,7 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - docker-build
+      - node-install
+#       - docker-build
 #       - build
 #       - shallow-checkout
