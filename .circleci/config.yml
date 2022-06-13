@@ -21,8 +21,11 @@ jobs:
             # See https://github.com/npm/cli/issues/4234
 
             choco uninstall nvm --confirm
+            choco uninstall nvm.portable --confirm
             choco install nvm
-            
+      - run:
+          name: Check current version of NVM
+          command: |
             # confirm NVM > 1.1.7 installed
             nvm --version          
 #       - run:
