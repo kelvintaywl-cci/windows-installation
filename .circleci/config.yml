@@ -23,6 +23,7 @@ jobs:
             choco uninstall nvm --confirm
             choco uninstall nvm.portable --confirm
             choco install nvm
+            choco install nvm.portable
       - run:
           name: Check current version of NVM
           command: |
