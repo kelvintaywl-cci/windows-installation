@@ -10,6 +10,7 @@ jobs:
       name: win/server-2022
       shell: bash.exe
     steps:
+      - checkout
       - run:
           name: Check current version of NVM
           command: |
