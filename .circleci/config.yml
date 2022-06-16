@@ -41,15 +41,17 @@ jobs:
       - run: |
           node --version
           npm --version
+          yarn --version
+      - run: yarn global add node-gyp
+      - node/install-packages:
+          with-cache: false
+          # cache-version: win32-v2
+          override-ci-command: yarn install --frozen-lockfile
       - run: |
-          npm install cowsay
-          echo '============'
-          cat package.json
-          echo '============'
-          cat package-lock.json
-#       - node/install-packages:
-#           # cache-version: v4-win32
-#           override-ci-command: npm ci --unsafe-perm
+          cat yarn.lock
+      - store_artifacts:
+          path: yarn.lock
+          
   docker-build:
     executor: win/server-2022
     steps:
