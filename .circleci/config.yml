@@ -63,7 +63,8 @@ jobs:
           override-ci-command: yarn install --frozen-lockfile
       - save_cache:
           key: v1-deps-{{ checksum "yarn.lock" }}
-          path: node_modules
+          paths:
+            - node_modules
 
 workflows:
   my-workflow:
