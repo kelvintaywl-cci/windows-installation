@@ -6,6 +6,7 @@ orbs:
 
 jobs:
   node-install:
+    parallelism: 3
     executor:
       name: win/server-2022
       shell: bash.exe
