@@ -52,8 +52,7 @@ jobs:
           yarn --version
       - run: yarn global add node-gyp
       - node/install-packages:
-          with-cache: false
-          # cache-version: win32-v2
+          with-cache: true
           override-ci-command: yarn install --frozen-lockfile
 
           
