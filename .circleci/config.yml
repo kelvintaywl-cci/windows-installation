@@ -65,6 +65,14 @@ jobs:
           key: v1-deps-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+      - run:
+          name: Debug info
+          command: |
+            which python && python --version
+            npm config list --json
+      - run: |
+          # will likely fail
+          node-gyp rebuild
 
 workflows:
   my-workflow:
