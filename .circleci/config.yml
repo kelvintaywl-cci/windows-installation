@@ -37,15 +37,14 @@ jobs:
 #             echo export STEAMWORKS_SDK_PATH=`pwd`/steamworks-sdk >> $BASH_ENV
 #             echo export PATH="/c/Program\\ Files/Git/mingw64/libexec/git-core:\$PATH" >> $BASH_ENV
       - run: |
-          # perhaps yarn should be installed via NPM instead
-          npm install --global yarn
-      - run: |
           # see https://github.com/coreybutler/nvm-windows/issues/674#issuecomment-943523487
           rm -r "${NVM_SYMLINK}"
       - node/install:
           # install-yarn: true
           node-version: '16.15.0'
       - run: nvm use 16.15.0
+      - run: |
+          npm install --global yarn
       - run: |
           node --version
           npm --version
