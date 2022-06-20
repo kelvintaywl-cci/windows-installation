@@ -69,6 +69,9 @@ jobs:
             which python && python --version
             npm config list --json
       - run: |
+          npm config set msvs_version 2017
+          npm config list --json
+      - run: |
           # will likely fail
           node-gyp rebuild
 
