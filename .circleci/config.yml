@@ -72,7 +72,8 @@ jobs:
           npm config set msvs_version 2017
           npm config list --json
       - run: |
-          # will likely fail
+          # NOTE: binding.gyp is expected to be available on project directory
+          # See https://github.com/nodejs/node-gyp/issues/1709
           node-gyp rebuild
 
 workflows:
