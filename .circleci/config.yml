@@ -14,6 +14,8 @@ jobs:
       - run:
           name: Install clang and Rust
           command: |
+            choco feature enable -n=allowGlobalConfirmation
+            
             choco install llvm
             choco install rust
 
