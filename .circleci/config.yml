@@ -18,7 +18,9 @@ jobs:
             
             choco install llvm
             choco install rust
-
+      - run:
+          name: check Rust
+          command: rustc
 
 workflows:
   my-workflow:
