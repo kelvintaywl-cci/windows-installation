@@ -11,70 +11,12 @@ jobs:
       name: win/server-2022
       shell: bash.exe
     steps:
-      - checkout
       - run:
-          name: Check current version of NVM
+          name: Install clang and Rust
           command: |
-            nvm --version
-#       - run:
-#           name: Reinstall NVM (newer version)
-#           command: |
-#             # Existing issue with NVM-windows 1.1.7
-#             # See https://github.com/npm/cli/issues/4234
+            choco install llvm
+            choco install rust
 
-#             choco uninstall nvm --confirm
-#             choco uninstall nvm.portable --confirm
-#             choco install nvm
-#             choco install nvm.portable
-#       - run:
-#           name: Check current version of NVM
-#           command: |
-#             # confirm NVM > 1.1.7 installed
-#             nvm --version          
-#       - run:
-#           name: Preparing Additional Environment Variables
-#           command: |
-#             echo export STEAMWORKS_SDK_PATH=`pwd`/steamworks-sdk >> $BASH_ENV
-#             echo export PATH="/c/Program\\ Files/Git/mingw64/libexec/git-core:\$PATH" >> $BASH_ENV
-      - run: |
-          # see https://github.com/coreybutler/nvm-windows/issues/674#issuecomment-943523487
-          rm -r "${NVM_SYMLINK}"
-      - node/install:
-          # install-yarn: true
-          node-version: '16.15.0'
-      - run: nvm use 16.15.0
-      - run: |
-          npm install --global yarn
-      - run: |
-          node --version
-          npm --version
-          yarn --version
-      - run: npm install --global node-gyp
-      - restore_cache:
-          keys:
-            - v1-deps-{{ checksum "yarn.lock" }}
-      - node/install-packages:
-          # do not use cache, since the Orb will try to create files in /tmp/* folder
-          # in short, Windows is not supported for the Node orb.
-          # see top description under https://circleci.com/developer/orbs/orb/circleci/node
-          with-cache: false
-          override-ci-command: yarn install --frozen-lockfile
-      - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - run:
-          name: Debug info
-          command: |
-            which python && python --version
-            npm config list --json
-      - run: |
-          npm config set msvs_version 2022
-          npm config list --json
-      - run: |
-          # NOTE: binding.gyp is expected to be available on project directory
-          # See https://github.com/nodejs/node-gyp/issues/1709
-          node-gyp rebuild
 
 workflows:
   my-workflow:
