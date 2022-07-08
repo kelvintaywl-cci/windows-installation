@@ -14,7 +14,10 @@ jobs:
           command: |
             New-Variable -Name "targetFolder" -Visibility Public -Value "foo\bar\$Env:APP_VERSION"
             $targetFolder
-
+      - run:
+          shell: powershell.exe
+          command: |
+            $targetFolder
 workflows:
   my-workflow:
     jobs:
