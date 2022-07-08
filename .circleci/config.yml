@@ -10,14 +10,16 @@ jobs:
       APP_VERSION: "19.0"
     steps:
       - run:
-          shell: powershell.exe
+          shell: bash.exe
           command: |
-            New-Variable -Name "targetFolder" -Visibility Public -Value "foo\bar\$Env:APP_VERSION"
-            $targetFolder
+            targetFolder="${APP_VERSION}"
+            echo $targetFolder
+            
+            echo "export targetFolder='${APP_VERSION}'" >> $BASH_ENV
       - run:
-          shell: powershell.exe
+          shell: bash.exe
           command: |
-            $targetFolder
+            echo $targetFolder
 workflows:
   my-workflow:
     jobs:
