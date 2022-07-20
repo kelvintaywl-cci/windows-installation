@@ -12,9 +12,7 @@ jobs:
       - run:
           shell: bash.exe
           command: |
-            targetFolder="${APP_VERSION}"
-            echo $targetFolder
-            
+            targetFolder="${APP_VERSION}"            
             echo "export targetFolder='${APP_VERSION}'" >> $BASH_ENV
       - run:
           shell: bash.exe
