@@ -24,3 +24,8 @@ jobs:
           name: check
           shell: bash.exe
           command: go version
+
+workflows:
+  main:
+    jobs:
+      - win-goinstall-test
