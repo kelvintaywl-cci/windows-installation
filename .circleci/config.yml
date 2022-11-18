@@ -17,9 +17,9 @@ jobs:
           shell: bash.exe
           command: go version
       - run:
-          name: install go via Chocolatey
+          name: upgrade go via Chocolatey
           shell: bash.exe
-          command: choco install golang
+          command: choco upgrade golang
       - run:
           name: check
           shell: bash.exe
