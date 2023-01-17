@@ -4,11 +4,11 @@ executors:
   windows:
     machine:
       image: windows-server-2022-gui:current
-      resource_class: windows.large
+      resource_class: windows.medium
   linux:
     machine:
       image: ubuntu-2204:current
-      resource_class: large
+      resource_class: medium
 jobs:
   tests:
     parameters:
