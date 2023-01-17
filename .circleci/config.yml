@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Glob packages (try exclude unit subfolder)
           command: |
-            circleci tests glob "tests/[!unit]**/*.spec.js"
+            circleci tests glob "tests/[!unit]*/*.spec.js"
 
 
 workflows:
