@@ -3,12 +3,40 @@ version: '2.1'
 orbs: 
   win: circleci/windows@4.1.1
 
+commands:
+  check_version:
+    parameters:
+      tool:
+        type: string
+    steps:
+      - run:
+          name: check << parameters.tool >>
+          command: choco info << parameters.tool >>
+  upgrade_version:
+    parameters:
+      tool:
+        type: string
+    steps:
+      - run:
+          name: upgrade << parameters.tool >>
+          command: choco upgrade -y << parameters.tool >>
+   
 jobs:
   build:
     executor: win/server-2022
     steps:
-      - checkout
-            
+      - check_version:
+          tool: visualstudio2022community
+      - check_version:
+          tool: visualstudio2022buildtools
+      - upgrade_version:
+          tool: visualstudio2022community
+      - upgrade_version:
+          tool: visualstudio2022buildtools
+      - check_version:
+          tool: visualstudio2022community
+      - check_version:
+          tool: visualstudio2022buildtools
       
 
 workflows:
