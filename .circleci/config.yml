@@ -11,7 +11,7 @@ commands:
     steps:
       - run:
           name: check << parameters.tool >>
-          command: choco info << parameters.tool >>
+          command: choco info --localonly << parameters.tool >>
   upgrade_version:
     parameters:
       tool:
