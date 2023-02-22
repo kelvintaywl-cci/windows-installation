@@ -6,9 +6,9 @@ orbs:
 executors:
   win-2022:
     machine:
-      image: windows-server-2022-gui:current
+      image: windows-server-2019-vs2019:2022.08.1
     shell: powershell.exe -ExecutionPolicy Bypass
-    resource_class: windows.large
+    resource_class: windows.medium
     working_directory: C:\projects\q
 
 jobs:
