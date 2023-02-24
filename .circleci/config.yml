@@ -1,83 +1,31 @@
-version: '2.1'
+version: 2.1
 
-orbs: 
-  win: circleci/windows@4.1.1
+orbs:
+  win: circleci/windows@5.0
 
 jobs:
-  docker-build:
-    executor: win/server-2022
-    steps:
-      - checkout
-      - run:
-          shell: bash.exe
-          command: |
-            docker build -t customwin -f ./.circleci/Dockerfile .
-            
-            docker image ls
-  docker-operations:
-    executor: win/server-2022
-    steps:
-      - checkout
-      - run:
-          name: check Docker
-          shell: bash.exe
-          command: |
-            docker version
-            docker image ls
-            docker pull mcr.microsoft.com/windows/nanoserver:ltsc2022
-            
-            docker image ls
-  shallow-checkout:
-    executor:
-      name: win/default
-      size: medium
-    steps:
-      - run:
-          name: setup SSH
-          shell: bash.exe
-          command: |
-            # See https://circleci.com/docs/2.0/gh-bb-integration/#establishing-the-authenticity-of-an-ssh-host
-            mkdir -p ~/.ssh
-
-            echo 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-            bitbucket.org ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==
-            ' >> ~/.ssh/known_hosts
-      - add_ssh_keys:
-          fingerprints:
-            - "24:76:60:64:c5:69:ab:51:8a:45:45:3a:e7:a7:9c:e0"
-      - run:
-          shell: bash.exe
-          command: |
-            ssh -T git@github.com || true 
-      - run:
-          shell: bash.exe
-          command: |
-            git clone --depth 1 $env:CIRCLE_REPOSITORY_URL .
   build:
     executor:
-      name: win/default
-      size: medium
+     name: win/default
+     shell: powershell.exe
+    working_directory: C:\\Users\\circleci\\project
+    parallelism: 10
     steps:
-      - run:
-          name: Profile CPU and memory usage (background)
-          background: true
-          command: |
-            while ($true) {
-                write-host "---------CPU"
-                wmic cpu get loadpercentage
-                write-host "---------Memory"
-                tasklist
-                write-host "---------"
-                start-sleep -Seconds 1
-                
-            }    
-      - checkout
-      - run: 'Write-Host ''Hello, Windows'''
-      
+        - run: curl https://raw.githubusercontent.com/owenjoliver/open_sandbox/main/SilentInstall.iss -O C:\\Users\\circleci\\SilentInstall.iss
+        - run: dir C:\\Users\\circleci
+        - run: type C:\\Users\\circleci\\SilentInstall.iss
+        - run: 
+            command: |
+              Invoke-WebRequest -Uri https://installers.ilok.com/iloklicensemanager/LicenseSupportInstallerWin64.zip -OutFile C:\\Users\\circleci\\License.zip
+              Expand-Archive -Path C:\\Users\\circleci\\License.zip -DestinationPath C:\\Users\\circleci\\
+            shell: powershell.exe
+        - run: 
+            command: |
+              & 'C:\\Users\\circleci\\LicenseSupportInstallerWin64_v5.7.1_fbd47960\\License Support Win64.exe' -s -f1\u201CC:\\Users\\circleci\\SilentInstall.iss\u201D
+            shell: powershell.exe
+        - run: dir 'C:\\Program Files (x86)\\iLok License Manager\\'
 
 workflows:
-  my-workflow:
+  workflow:
     jobs:
-      - docker-build
-#       - build
-#       - shallow-checkout
+      - build
