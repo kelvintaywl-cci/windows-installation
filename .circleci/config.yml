@@ -1,31 +1,61 @@
-version: 2.1
-
-orbs:
-  win: circleci/windows@5.0
-
+# Orb 'circleci/windows@5.0' resolved to 'circleci/windows@5.0.0'
+version: 2
 jobs:
   build:
-    executor:
-     name: win/default
-     shell: powershell.exe
-    working_directory: C:\\Users\\circleci\\project
-    parallelism: 10
+    machine:
+      image: windows-server-2022-gui:current
+    working_directory: C:\Users\circleci\project
     steps:
-        - run: curl https://raw.githubusercontent.com/owenjoliver/open_sandbox/main/SilentInstall.iss -O C:\\Users\\circleci\\SilentInstall.iss
-        - run: dir C:\\Users\\circleci
-        - run: type C:\\Users\\circleci\\SilentInstall.iss
-        - run: 
-            command: |
-              Invoke-WebRequest -Uri https://installers.ilok.com/iloklicensemanager/LicenseSupportInstallerWin64.zip -OutFile C:\\Users\\circleci\\License.zip
-              Expand-Archive -Path C:\\Users\\circleci\\License.zip -DestinationPath C:\\Users\\circleci\\
-            shell: powershell.exe
-        - run: 
-            command: |
-              & 'C:\\Users\\circleci\\LicenseSupportInstallerWin64_v5.7.1_fbd47960\\License Support Win64.exe' -s -f1\u201CC:\\Users\\circleci\\SilentInstall.iss\u201D
-            shell: powershell.exe
-        - run: dir 'C:\\Program Files (x86)\\iLok License Manager\\'
-
+    - run:
+        command: curl https://raw.githubusercontent.com/owenjoliver/open_sandbox/main/SilentInstall.iss -O C:\Users\circleci\SilentInstall.iss
+    - run:
+        command: dir C:\Users\circleci
+    - run:
+        command: type C:\Users\circleci\SilentInstall.iss
+    - run:
+        command: |
+          Invoke-WebRequest -Uri https://installers.ilok.com/iloklicensemanager/LicenseSupportInstallerWin64.zip -OutFile C:\Users\circleci\License.zip
+          Expand-Archive -Path C:\Users\circleci\License.zip -DestinationPath C:\Users\circleci\
+        shell: powershell.exe
+    - run:
+        command: |
+          & 'C:\Users\circleci\LicenseSupportInstallerWin64_v5.7.1_fbd47960\License Support Win64.exe' -s -f1“C:\Users\circleci\SilentInstall.iss”
+        shell: powershell.exe
+    - run:
+        command: dir 'C:\Program Files (x86)\iLok License Manager\'
+    resource_class: windows.medium
+    shell: powershell.exe
 workflows:
   workflow:
     jobs:
-      - build
+    - build
+  version: 2
+
+# Original config.yml file:
+# version: 2.1
+# orbs:
+#   win: circleci/windows@5.0
+# jobs:
+#   build:
+#     executor:
+#      name: win/default
+#      shell: powershell.exe
+#     working_directory: C:\\Users\\circleci\\project
+#     steps:
+#         - run: curl https://raw.githubusercontent.com/owenjoliver/open_sandbox/main/SilentInstall.iss -O C:\\Users\\circleci\\SilentInstall.iss
+#         - run: dir C:\\Users\\circleci
+#         - run: type C:\\Users\\circleci\\SilentInstall.iss
+#         - run: 
+#             command: |
+#               Invoke-WebRequest -Uri https://installers.ilok.com/iloklicensemanager/LicenseSupportInstallerWin64.zip -OutFile C:\\Users\\circleci\\License.zip
+#               Expand-Archive -Path C:\\Users\\circleci\\License.zip -DestinationPath C:\\Users\\circleci\\
+#             shell: powershell.exe
+#         - run: 
+#             command: |
+#               & 'C:\\Users\\circleci\\LicenseSupportInstallerWin64_v5.7.1_fbd47960\\License Support Win64.exe' -s -f1\u201CC:\\Users\\circleci\\SilentInstall.iss\u201D
+#             shell: powershell.exe
+#         - run: dir 'C:\\Program Files (x86)\\iLok License Manager\\'
+# workflows:
+#   workflow:
+#     jobs:
+#       - build
