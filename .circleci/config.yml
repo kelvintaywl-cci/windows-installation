@@ -11,6 +11,15 @@ jobs:
       - run:
           shell: bash.exe
           command: |
+            curl https://raw.githubusercontent.com/nanophate/circleci-server-windows-image-builder/f46cfc35d505c4510409d6f220d93af21fb53dab/windows/provision-scripts/configure-docker.ps1 > Configure-docker.ps1
+      - run:
+          name: reconfigure Docker daemon
+          command: |
+            .\Configure-docker.ps1
+            restart-service *docker*
+      - run:
+          shell: bash.exe
+          command: |
             docker build -t customwin -f ./.circleci/Dockerfile .
             
             docker image ls
