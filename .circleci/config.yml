@@ -11,7 +11,7 @@ jobs:
       - run:
           shell: bash.exe
           command: |
-            curl https://gist.githubusercontent.com/kelvintaywl/b6404cc4e1149d5afc52a5e0fb5e6858/raw/2444752ce2b243f5df10251eff2362bd55cb2060/Configure-Docker.ps1 > Configure-Docker.ps1
+            curl https://gist.githubusercontent.com/kelvintaywl/b6404cc4e1149d5afc52a5e0fb5e6858/raw/be4bac679f7ee755351f380ee710399f3ce43752/Configure-Docker.ps1 > Configure-Docker.ps1
       - run:
           name: reconfigure Docker daemon
           command: |
