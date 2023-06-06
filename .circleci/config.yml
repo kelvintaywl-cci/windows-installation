@@ -11,7 +11,8 @@ jobs:
       - run:
           shell: bash.exe
           command: |
-            curl https://gist.githubusercontent.com/kelvintaywl/b6404cc4e1149d5afc52a5e0fb5e6858/raw/be4bac679f7ee755351f380ee710399f3ce43752/Configure-Docker.ps1 > Configure-Docker.ps1
+            # Using my own registry hosted on AWS EC2 (test only)
+            curl https://gist.githubusercontent.com/kelvintaywl/6d7120e48928372ba7c7d5377ad0abe9/raw/de809ac906696f13f48ba98da0a8604bd39064ac/Configure-Docker.ps1 > Configure-Docker.ps1
       - run:
           name: reconfigure Docker daemon
           command: |
@@ -22,6 +23,7 @@ jobs:
             docker info
             
             docker pull hello-world
+            docker pull registry:2
             
             docker image ls
   docker-operations:
