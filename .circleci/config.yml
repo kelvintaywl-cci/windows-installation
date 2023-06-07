@@ -6,13 +6,15 @@ orbs:
 jobs:
   docker-build:
     executor: win/server-2022
+    environment:
+      DOCKERHUB_REGISTRY_MIRROR: "https://mirror.gcr.io"
     steps:
       - checkout
       - run:
           shell: bash.exe
           command: |
             # Using my own registry hosted on AWS EC2 (test only)
-            curl https://gist.githubusercontent.com/kelvintaywl/6d7120e48928372ba7c7d5377ad0abe9/raw/de809ac906696f13f48ba98da0a8604bd39064ac/Configure-Docker.ps1 > Configure-Docker.ps1
+            curl https://gist.githubusercontent.com/kelvintaywl/b6404cc4e1149d5afc52a5e0fb5e6858/raw/7be410ca8e7dd9db0afac6be5761e9c093a659dc/Configure-Docker.ps1 > Configure-Docker.ps1
       - run:
           name: reconfigure Docker daemon
           command: |
