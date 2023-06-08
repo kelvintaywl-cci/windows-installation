@@ -6,8 +6,8 @@ orbs:
 jobs:
   docker-build:
     executor: win/server-2022
-    environment:
-      DOCKERHUB_REGISTRY_MIRROR: "https://mirror.gcr.io"
+#     environment:
+#       DOCKERHUB_REGISTRY_MIRROR: "https://mirror.gcr.io"
     steps:
       - checkout
       - run:
