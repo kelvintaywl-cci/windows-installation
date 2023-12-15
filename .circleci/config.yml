@@ -7,7 +7,7 @@ jobs:
   sql-server:
     executor: win/server-2022
     steps:
-      - run: choco install sql-server-2019
+      - run: choco install -y sql-server-2019
   docker-build:
     executor: win/server-2022
     steps:
