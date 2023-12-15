@@ -4,6 +4,10 @@ orbs:
   win: circleci/windows@4.1.1
 
 jobs:
+  sql-server:
+    executor: win/server-2022
+    steps:
+      - run: choco install sql-server-2019
   docker-build:
     executor: win/server-2022
     steps:
@@ -78,6 +82,6 @@ jobs:
 workflows:
   my-workflow:
     jobs:
-      - docker-build
+      - sql-server
 #       - build
 #       - shallow-checkout
