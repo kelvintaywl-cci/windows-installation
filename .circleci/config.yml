@@ -8,13 +8,29 @@ jobs:
   cli:
     parameters:
       orb-version:
+        type: integer
+      cli-version:
         type: string
+        default: '463.0.0'
     machine:
       image: windows-server-2019-vs2019:2023.10.1
     steps:
+      - when:
+          condition:
+            equal: [ 2, << parameters.orb-version >> ]
+          steps:
+            - gcp-cli-2/install:
+                version: 
       - gcp-cli-<< parameters.orb-version >>/install:
-          version: '463.0.0'
-          
+          version: << parameters.cli-version >>
+      - when:
+          condition:
+            equal: [ 3, << parameters.orb-version >> ]
+          steps:
+            - gcp-cli-3/install:
+                version: 
+      - gcp-cli-<< parameters.orb-version >>/install:
+          version: << parameters.cli-version >>
 
 workflows:
   gcp:
@@ -23,5 +39,5 @@ workflows:
           matrix:
             parameters:
               orb-version:
-                - '2'
-                - '3'
+                - 2
+                - 3
