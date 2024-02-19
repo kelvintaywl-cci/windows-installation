@@ -28,9 +28,8 @@ jobs:
             equal: [ 3, << parameters.orb-version >> ]
           steps:
             - gcp-cli-3/install:
-                version: 
-      - gcp-cli-<< parameters.orb-version >>/install:
-          version: << parameters.cli-version >>
+                version: << parameters.cli-version >>
+
 
 workflows:
   gcp:
